@@ -101,6 +101,3 @@ def UpdateMovieData(record_id, Movie_ID="", Movie_Name="", Release_Date="", Dire
         connection.commit()
         return cursor.rowcount > 0
 
-
-# Keep the database ready when the Tkinter frontend imports this module.
-MovieData()
