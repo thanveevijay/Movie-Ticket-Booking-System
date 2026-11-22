@@ -18,8 +18,10 @@ MOVIE_FIELDS = (
 
 
 def _connect():
-    """Open a connection and ensure the catalogue table exists."""
-    connection = sqlite3.connect(DB_NAME)
+    """Open a connection with consistent SQLite safety settings."""
+    connection = sqlite3.connect(DB_NAME, timeout=10)
+    connection.execute("PRAGMA foreign_keys = ON")
+    connection.execute("PRAGMA busy_timeout = 10000")
     connection.execute(
         """
         CREATE TABLE IF NOT EXISTS book (
@@ -100,4 +102,3 @@ def UpdateMovieData(record_id, Movie_ID="", Movie_Name="", Release_Date="", Dire
         )
         connection.commit()
         return cursor.rowcount > 0
-
